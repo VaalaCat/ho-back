@@ -1,4 +1,5 @@
 const model = require('../model.js')
+const Sequelize = require('sequelize')
 
 let Apply = model.Apply
 
@@ -79,10 +80,34 @@ let getNmlApply = async (nid) => {
     })
 }
 
+
+/**
+ * 用于检查uid和aid是否为一对
+ * @param {string} uid 用户id
+ * @param {string} aid applyid
+ * @returns true:right/false:wrong
+ */
+let affCheck = async (uid, aid) => {
+    return new Promise(async (resolve, reject) => {
+        Apply.findAll({
+            where: Sequelize.and(
+                { id: aid },
+                Sequelize.or(
+                    { did: uid },
+                    { nid: uid }
+                )
+            )
+        })
+            .then(data => { if (data.length > 0) resolve(true); else resolve(false); })
+            .catch(err => resolve(false))
+    })
+}
+
 module.exports = {
     addApply,
     updateApply,
     removeApply,
     getDocApply,
-    getNmlApply
+    getNmlApply,
+    affCheck
 }

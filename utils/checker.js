@@ -6,19 +6,19 @@
  * @returns true:success/false:error
  */
 let paramCheck = (params, data) => {
-    for (let i in params) {
-        if (typeof data[params[i]] === 'undefined') {
-            return false;
-        }
-    }
-    return true;
+	for (let i in params) {
+		if (typeof data[params[i]] === 'undefined') {
+			return false;
+		}
+	}
+	return true;
 }
 
 let timeCheck = (data) => {
-    return true;
+	return true;
 }
 
 module.exports = {
-    paramCheck,
-    timeCheck
+	paramCheck,
+	timeCheck
 }

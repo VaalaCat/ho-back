@@ -11,12 +11,12 @@ let Introduction = model.Introduction
  * @returns true:success/false:error
  */
 let addIntroduction = async (introduction) => {
-    return new Promise(async (resolve, reject) => {
-        Introduction
-            .create(introduction)
-            .then(data => resolve(true))
-            .catch(err => resolve(false))
-    })
+	return new Promise(async (resolve, reject) => {
+		Introduction
+			.create(introduction)
+			.then(data => resolve(true))
+			.catch(err => resolve(false))
+	})
 }
 
 /**
@@ -26,12 +26,12 @@ let addIntroduction = async (introduction) => {
  * @returns true:success/false:error
  */
 let updateIntroduction = async (introduction) => {
-    return new Promise(async (resolve, reject) => {
-        Introduction
-            .update(introduction, { where: { did: introduction.did } })
-            .then(data => resolve(true))
-            .catch(err => resolve(false))
-    })
+	return new Promise(async (resolve, reject) => {
+		Introduction
+			.update(introduction, { where: { did: introduction.did } })
+			.then(data => resolve(true))
+			.catch(err => resolve(false))
+	})
 }
 
 /**
@@ -40,12 +40,12 @@ let updateIntroduction = async (introduction) => {
  * @returns true:success/false:error
  */
 let removeIntroduction = async (did) => {
-    return new Promise(async (resolve, reject) => {
-        Introduction
-            .delete({ where: { did: did } })
-            .then(data => { if (data.length > 0) resolve(true); else resolve(false) })
-            .catch(err => resolve(false))
-    })
+	return new Promise(async (resolve, reject) => {
+		Introduction
+			.delete({ where: { did: did } })
+			.then(data => { if (data.length > 0) resolve(true); else resolve(false) })
+			.catch(err => resolve(false))
+	})
 }
 
 /**
@@ -54,34 +54,34 @@ let removeIntroduction = async (did) => {
  * @returns []
  */
 let getAffIntroduction = async (aff) => {
-    return new Promise(async (resolve, reject) => {
-        Introduction
-            .findAll({ attributes: ['did', 'info'], where: { aff: aff } })
-            .then(data => resolve(data))
-            .catch(err => resolve(false))
-    })
+	return new Promise(async (resolve, reject) => {
+		Introduction
+			.findAll({ attributes: ['did', 'info'], where: { aff: aff } })
+			.then(data => resolve(data))
+			.catch(err => resolve(false))
+	})
 }
 /**
  * 用于获取所有的Aff
  * @returns []
  */
 let getAff = async () => {
-    return new Promise(async (resolve, reject) => {
-        let tmp = JSON.parse(JSON.stringify(await Introduction.findAll({ attributes: ['aff'] })))
-        let ans = []
-        for (let i in tmp) {
-            if (ans.indexOf(tmp[i].aff) === -1) {
-                ans.push(tmp[i].aff)
-            }
-        }
-        resolve(ans)
-    })
+	return new Promise(async (resolve, reject) => {
+		let tmp = JSON.parse(JSON.stringify(await Introduction.findAll({ attributes: ['aff'] })))
+		let ans = []
+		for (let i in tmp) {
+			if (ans.indexOf(tmp[i].aff) === -1) {
+				ans.push(tmp[i].aff)
+			}
+		}
+		resolve(ans)
+	})
 }
 
 module.exports = {
-    addIntroduction,
-    updateIntroduction,
-    removeIntroduction,
-    getAffIntroduction,
-    getAff
+	addIntroduction,
+	updateIntroduction,
+	removeIntroduction,
+	getAffIntroduction,
+	getAff
 }

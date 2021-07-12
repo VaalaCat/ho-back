@@ -26,23 +26,23 @@ app.use('/apply', applyRoute);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
-  next(res.status(404).json({ code: '1', result: 'error' }));
+	next(res.status(404).json({ code: '1', result: 'error' }));
 });
 
 // error handler
 app.use((err, req, res, next) => {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-  if (err.statusCode !== 404)
-    res.status(err.statusCode || 500).json({ code: 1, result: 'error' + err.message })
+	// set locals, only providing error in development
+	res.locals.message = err.message;
+	res.locals.error = req.app.get('env') === 'development' ? err : {};
+	if (err.statusCode !== 404)
+		res.status(err.statusCode || 500).json({ code: 1, result: 'error' + err.message })
 });
 
 app.options("/*", function (req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
-  res.send(200);
+	res.header('Access-Control-Allow-Origin', '*');
+	res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+	res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
+	res.send(200);
 });
 
 module.exports = app;

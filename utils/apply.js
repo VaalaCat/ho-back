@@ -13,12 +13,12 @@ let Apply = model.Apply
  * @returns true:success/false:error
  */
 let addApply = async (apply) => {
-    return new Promise(async (resolve, reject) => {
-        Apply
-            .create(apply)
-            .then(data => resolve(true))
-            .catch(err => resolve(false))
-    })
+	return new Promise(async (resolve, reject) => {
+		Apply
+			.create(apply)
+			.then(data => resolve(true))
+			.catch(err => resolve(false))
+	})
 }
 
 /**
@@ -29,12 +29,12 @@ let addApply = async (apply) => {
  * @returns true:success/false:error
  */
 let updateApply = async (apply) => {
-    return new Promise(async (resolve, reject) => {
-        Apply
-            .update(apply, { where: { id: apply.id } })
-            .then(data => resolve(true))
-            .catch(err => resolve(false))
-    })
+	return new Promise(async (resolve, reject) => {
+		Apply
+			.update(apply, { where: { id: apply.id } })
+			.then(data => resolve(true))
+			.catch(err => resolve(false))
+	})
 }
 
 /**
@@ -44,12 +44,12 @@ let updateApply = async (apply) => {
  * @returns true:success/false:error
  */
 let removeApply = async (apply) => {
-    return new Promise(async (resolve, reject) => {
-        Apply
-            .delete({ where: { id: apply.id } })
-            .then(data => resolve(true))
-            .catch(err => resolve(false))
-    })
+	return new Promise(async (resolve, reject) => {
+		Apply
+			.delete({ where: { id: apply.id } })
+			.then(data => resolve(true))
+			.catch(err => resolve(false))
+	})
 }
 
 /**
@@ -58,12 +58,12 @@ let removeApply = async (apply) => {
  * @returns 返回该用户的所有挂号条目
  */
 let getDocApply = async (did) => {
-    return new Promise(async (resolve, reject) => {
-        Apply
-            .findAll({ where: { did: did } })
-            .then(data => resolve(data))
-            .catch(err => resolve(false))
-    })
+	return new Promise(async (resolve, reject) => {
+		Apply
+			.findAll({ where: { did: did } })
+			.then(data => resolve(data))
+			.catch(err => resolve(false))
+	})
 }
 
 /**
@@ -72,12 +72,12 @@ let getDocApply = async (did) => {
  * @returns 返回该用户的所有挂号条目
  */
 let getNmlApply = async (nid) => {
-    return new Promise(async (resolve, reject) => {
-        Apply
-            .findAll({ where: { nid: nid } })
-            .then(data => resolve(data))
-            .catch(err => resolve(false))
-    })
+	return new Promise(async (resolve, reject) => {
+		Apply
+			.findAll({ where: { nid: nid } })
+			.then(data => resolve(data))
+			.catch(err => resolve(false))
+	})
 }
 
 
@@ -88,26 +88,26 @@ let getNmlApply = async (nid) => {
  * @returns true:right/false:wrong
  */
 let affCheck = async (uid, aid) => {
-    return new Promise(async (resolve, reject) => {
-        Apply.findAll({
-            where: Sequelize.and(
-                { id: aid },
-                Sequelize.or(
-                    { did: uid },
-                    { nid: uid }
-                )
-            )
-        })
-            .then(data => { if (data.length > 0) resolve(true); else resolve(false); })
-            .catch(err => resolve(false))
-    })
+	return new Promise(async (resolve, reject) => {
+		Apply.findAll({
+			where: Sequelize.and(
+				{ id: aid },
+				Sequelize.or(
+					{ did: uid },
+					{ nid: uid }
+				)
+			)
+		})
+			.then(data => { if (data.length > 0) resolve(true); else resolve(false); })
+			.catch(err => resolve(false))
+	})
 }
 
 module.exports = {
-    addApply,
-    updateApply,
-    removeApply,
-    getDocApply,
-    getNmlApply,
-    affCheck
+	addApply,
+	updateApply,
+	removeApply,
+	getDocApply,
+	getNmlApply,
+	affCheck
 }

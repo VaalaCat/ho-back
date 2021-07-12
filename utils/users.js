@@ -9,12 +9,12 @@ let User = model.User;
  * @returns {string} true:right/flase:wrong
  */
 let checkPassword = async (email, passwd) => {
-    return new Promise(async (resolve, reject) => {
-        User
-            .findAll({ where: { email: email, passwd: passwd } })
-            .then(data => { if (data.length > 0) resolve(true); else resolve(false) })
-            .catch(err => resolve(false))
-    })
+	return new Promise(async (resolve, reject) => {
+		User
+			.findAll({ where: { email: email, passwd: passwd } })
+			.then(data => { if (data.length > 0) resolve(true); else resolve(false) })
+			.catch(err => resolve(false))
+	})
 }
 
 /**
@@ -28,12 +28,12 @@ let checkPassword = async (email, passwd) => {
  * @returns {boolean} true:success/false:error
  */
 let addUser = async (user) => {
-    return new Promise(async (resolve, reject) => {
-        User
-            .create(user)
-            .then(data => resolve(true))
-            .catch(err => resolve(false))
-    })
+	return new Promise(async (resolve, reject) => {
+		User
+			.create(user)
+			.then(data => resolve(true))
+			.catch(err => resolve(false))
+	})
 }
 
 /**
@@ -47,12 +47,12 @@ let addUser = async (user) => {
  * @returns {integer} true:success/false:error
  */
 let updateUser = async (user) => {
-    return new Promise(async (resolve, reject) => {
-        User
-            .update(user, { where: { email: user.email } })
-            .then(data => resolve(true))
-            .catch(err => resolve(false))
-    })
+	return new Promise(async (resolve, reject) => {
+		User
+			.update(user, { where: { email: user.email } })
+			.then(data => resolve(true))
+			.catch(err => resolve(false))
+	})
 }
 
 /**
@@ -61,17 +61,17 @@ let updateUser = async (user) => {
  * @returns info
  */
 let getUserInfo = async (info) => {
-    return new Promise(async (resolve, reject) => {
-        User
-            .findAll({ where: info })
-            .then(user => resolve(user))
-            .catch(err => resolve(false))
-    })
+	return new Promise(async (resolve, reject) => {
+		User
+			.findAll({ where: info })
+			.then(user => resolve(user))
+			.catch(err => resolve(false))
+	})
 }
 
 module.exports = {
-    checkPassword,
-    addUser,
-    updateUser,
-    getUserInfo
+	checkPassword,
+	addUser,
+	updateUser,
+	getUserInfo
 }

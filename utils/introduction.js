@@ -42,7 +42,7 @@ let updateIntroduction = async (introduction) => {
 let removeIntroduction = async (did) => {
 	return new Promise(async (resolve, reject) => {
 		Introduction
-			.delete({ where: { did: did } })
+			.destroy({ where: { did: did } })
 			.then(data => { if (data.length > 0) resolve(true); else resolve(false) })
 			.catch(err => resolve(false))
 	})

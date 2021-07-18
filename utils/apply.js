@@ -46,7 +46,7 @@ let updateApply = async (apply) => {
 let removeApply = async (apply) => {
 	return new Promise(async (resolve, reject) => {
 		Apply
-			.delete({ where: { id: apply.id } })
+			.destroy({ where: { id: apply.id } })
 			.then(data => resolve(true))
 			.catch(err => resolve(false))
 	})

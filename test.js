@@ -6,82 +6,89 @@ var md5 = require('md5')
 let createTestData = async () => {
 	return new Promise(async (resolve, reject) => {
 		await users.addUser({
-			name: 'a1',
-			email: 'a1',
+			name: 'admin',
+			email: 'admin@admin.admin',
+			phone: 'admin',
+			role: 'admin',
+			passwd: md5(md5('admin'))
+		})
+		await users.addUser({
+			name: '张三',
+			email: '1@1.1',
 			phone: 'a1',
 			role: 'normal',
 			passwd: md5(md5('1'))
 		})
 		await users.addUser({
-			name: 'a2',
-			email: 'a2',
+			name: '李四',
+			email: '2@2.2',
 			phone: 'a2',
 			role: 'normal',
 			passwd: md5(md5('1'))
 		})
 		await users.addUser({
-			name: 'a3',
-			email: 'a3',
+			name: '王五',
+			email: '3@3.3',
 			phone: 'a3',
 			role: 'normal',
 			passwd: md5(md5('1'))
 		})
 		await users.addUser({
-			name: 'd1',
-			email: 'd1',
+			name: '六医生',
+			email: '6@6.6',
 			phone: 'd1',
 			role: 'doctor',
 			passwd: md5(md5('1'))
 		})
 		await users.addUser({
-			name: 'd2',
-			email: 'd2',
+			name: '二三三医生',
+			email: '23@23.23',
 			phone: 'd2',
 			role: 'doctor',
 			passwd: md5(md5('1'))
 		})
 		await users.addUser({
-			name: 'd3',
-			email: 'd3',
+			name: '四医生',
+			email: '4@4.4',
 			phone: 'd3',
 			role: 'doctor',
 			passwd: md5(md5('1'))
 		})
 		let introd1 = {
-			did: JSON.parse(JSON.stringify(await users.getUserInfo({ email: 'd1' })))[0].id,
-			info: 'i am the best doctor',
-			aff: 'eye'
+			did: JSON.parse(JSON.stringify(await users.getUserInfo({ email: '6@6.6' })))[0].id,
+			info: '我是最好的医生',
+			aff: '眼科'
 		}
 		let introd2 = {
-			did: JSON.parse(JSON.stringify(await users.getUserInfo({ email: 'd2' })))[0].id,
-			info: 'what the fuck',
-			aff: 'head'
+			did: JSON.parse(JSON.stringify(await users.getUserInfo({ email: '23@23.23' })))[0].id,
+			info: '不不不，我才是最好的',
+			aff: '脑科'
 		}
 		let introd3 = {
-			did: JSON.parse(JSON.stringify(await users.getUserInfo({ email: 'd3' })))[0].id,
-			info: 'oh yes',
-			aff: 'head'
+			did: JSON.parse(JSON.stringify(await users.getUserInfo({ email: '4@4.4' })))[0].id,
+			info: '你们都没我好',
+			aff: '脑科'
 		}
 		await intro.addIntroduction(introd1);
 		await intro.addIntroduction(introd2);
 		await intro.addIntroduction(introd3);
 
 		apply.addApply({
-			did: JSON.parse(JSON.stringify(await users.getUserInfo({ email: 'd1' })))[0].id,
-			nid: JSON.parse(JSON.stringify(await users.getUserInfo({ email: 'a1' })))[0].id,
-			atime: '0',
+			did: JSON.parse(JSON.stringify(await users.getUserInfo({ email: '6@6.6' })))[0].id,
+			nid: JSON.parse(JSON.stringify(await users.getUserInfo({ email: '1@1.1' })))[0].id,
+			atime: '2021-06-06',
 			archivetime: '0'
 		})
 		apply.addApply({
-			did: JSON.parse(JSON.stringify(await users.getUserInfo({ email: 'd1' })))[0].id,
-			nid: JSON.parse(JSON.stringify(await users.getUserInfo({ email: 'a2' })))[0].id,
-			atime: '0',
+			did: JSON.parse(JSON.stringify(await users.getUserInfo({ email: '6@6.6' })))[0].id,
+			nid: JSON.parse(JSON.stringify(await users.getUserInfo({ email: '2@2.2' })))[0].id,
+			atime: '2021-01-01',
 			archivetime: '0'
 		})
 		apply.addApply({
-			did: JSON.parse(JSON.stringify(await users.getUserInfo({ email: 'd2' })))[0].id,
-			nid: JSON.parse(JSON.stringify(await users.getUserInfo({ email: 'a3' })))[0].id,
-			atime: '0',
+			did: JSON.parse(JSON.stringify(await users.getUserInfo({ email: '23@23.23' })))[0].id,
+			nid: JSON.parse(JSON.stringify(await users.getUserInfo({ email: '3@3.3' })))[0].id,
+			atime: '2022-10-10',
 			archivetime: '0'
 		})
 	})
@@ -122,5 +129,6 @@ let createTestData = async () => {
 	// console.log('-----------------------------------------')
 	// console.log(info)
 	await createTestData()
+	// console.log(JSON.stringify(await users.searchUser()))
 	// console.log(await intro.getAff())
 })()

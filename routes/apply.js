@@ -30,7 +30,8 @@ router.post('/add', async (req, res, next) => {
 	})
 });
 
-router.get('/show', async (req, res, next) => {
+router.all('/show', async (req, res, next) => {
+	let params = req.body
 	let token = typeof (req.headers.authorization) == 'undefined' ? '' : req.headers.authorization.split(' ')[1]
 	jwt.verify(token, config.secret, async (err, decode) => {
 		if (err) { return res.status(401).json({ code: 1, msg: 'token is invalid' }) }
@@ -39,6 +40,16 @@ router.get('/show', async (req, res, next) => {
 			let result
 			if (tmpuser.role == 'doctor')
 				result = JSON.parse(JSON.stringify(await apply.getDocApply(tmpuser.id)))
+
+			else if (tmpuser.role == 'admin') {
+				if (!checker.paramCheck(['id'], params)) { return res.status(403).json({ code: 1, msg: '参数数量不足' }) }
+				let applyUser = JSON.parse(JSON.stringify(await users.getUserInfo({ id: params.id })))[0]
+				if (applyUser.role == 'normal') {
+					result = JSON.parse(JSON.stringify(await apply.getNmlApply(applyUser.id)))
+				} else {
+					result = JSON.parse(JSON.stringify(await apply.getDocApply(applyUser.id)))
+				}
+			}
 			else
 				result = JSON.parse(JSON.stringify(await apply.getNmlApply(tmpuser.id)))
 			for (let i = 0; i < result.length; i++) {
@@ -61,14 +72,14 @@ router.post('/opt', async (req, res, next) => {
 			let result = ''
 			if (params.list.length > 0) {
 				for (let i = 0; i < params.list.length; i++) {
-					let affcheck = await apply.affCheck(tmpuser.id, params.list[i])
+					let affcheck = await apply.affCheck(tmpuser.id, params.list[i].id)
 					if (!affcheck) { return res.status(403).send({ code: 1, msg: '您没有操作该条目的权限' }) }
 					if (params.func == 'accept' && tmpuser.role == 'doctor')
-						result = await apply.updateApply({ id: params.list[i], archivetime: (new Date()).toDateString() })
+						result = await apply.updateApply({ id: params.list[i].id, archivetime: (new Date()).toDateString() })
 					else if (params.func == 'disallow') {
 						let tmp = 'disallow'
 						if (tmpuser.role == 'normal') tmp = 'cancel'
-						result = await apply.updateApply({ id: params.list[i], archivetime: tmp })
+						result = await apply.updateApply({ id: params.list[i].id, archivetime: tmp })
 					}
 					else {
 						result = false;
@@ -82,5 +93,21 @@ router.post('/opt', async (req, res, next) => {
 		}
 	})
 })
+
+
+router.post('/delete', async (req, res, next) => {
+	let params = req.body
+	let token = typeof (req.headers.authorization) == 'undefined' ? '' : req.headers.authorization.split(' ')[1]
+	jwt.verify(token, config.secret, async (err, decode) => {
+		if (err) { return res.status(401).json({ code: 1, msg: 'token is invalid' }) }
+		else {
+			let tmpuser = JSON.parse(JSON.stringify(await users.getUserInfo({ email: decode.email })))[0]
+			if (tmpuser.role != 'admin') { return res.status(403).json({ code: 1, msg: '您没有操作该条目的权限' }) }
+			if (params.id)
+				apply.removeApply(params)
+		}
+	})
+})
+
 
 module.exports = router;

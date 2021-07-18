@@ -1,4 +1,6 @@
 const model = require('../model.js')
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
 let User = model.User;
 
@@ -76,20 +78,20 @@ const getUserInfo = async (info) => {
 const deleteUser = async (id) => {
 	return new Promise(async (resolve, reject) => {
 		User
-			.delete({ where: { id: id } })
+			.destroy({ where: { id: id } })
 			.then(data => resolve(true))
 			.catch(err => resolve(false))
 	})
 }
 
 /**
- * 以名字模糊搜索用户信息
- * @param {string} name 用户名字
+ * 以邮箱模糊搜索用户信息
+ * @param {string} email 用户邮箱
  */
-const searchUser = async (name) => {
+const searchUser = async (email) => {
 	return new Promise(async (resolve, reject) => {
 		User
-			.findAll({ where: { name: { [Op.like]: `%${name}%` } } })
+			.findAll({ where: { email: { [Op.like]: `%${email}%` } } })
 			.then(data => resolve(data))
 			.catch(err => resolve(false))
 	})

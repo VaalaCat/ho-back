@@ -9,7 +9,7 @@
             "request": "launch",
             "name": "单元测试",
             "program": "${workspaceFolder}/test.js",
-            "runtimeExecutable": "C:\\Users\\vaala\\anaconda3\\node.exe",
+            "runtimeExecutable": "node",
             "skipFiles": [
                 "<node_internals>/**"
             ]
@@ -21,7 +21,7 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "runtimeExecutable": "C:\\Users\\vaala\\anaconda3\\node.exe",
+            "runtimeExecutable": "node",
             "program": "${workspaceFolder}\\bin\\www"
         }
     ]

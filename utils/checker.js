@@ -7,7 +7,7 @@
  */
 let paramCheck = (params, data) => {
 	for (let i in params) {
-		if (typeof data[params[i]] === 'undefined') {
+		if (typeof data[params[i]] === 'undefined' || data[params[i]].indexOf('null') !== -1) {
 			return false;
 		}
 	}

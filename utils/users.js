@@ -8,7 +8,7 @@ let User = model.User;
  * @param {string} password 
  * @returns {string} true:right/flase:wrong
  */
-let checkPassword = async (email, passwd) => {
+const checkPassword = async (email, passwd) => {
 	return new Promise(async (resolve, reject) => {
 		User
 			.findAll({ where: { email: email, passwd: passwd } })
@@ -27,7 +27,7 @@ let checkPassword = async (email, passwd) => {
  * @param {string} user.role
  * @returns {boolean} true:success/false:error
  */
-let addUser = async (user) => {
+const addUser = async (user) => {
 	return new Promise(async (resolve, reject) => {
 		User
 			.create(user)
@@ -46,7 +46,7 @@ let addUser = async (user) => {
  * @param {string} user.role
  * @returns {integer} true:success/false:error
  */
-let updateUser = async (user) => {
+const updateUser = async (user) => {
 	return new Promise(async (resolve, reject) => {
 		User
 			.update(user, { where: { email: user.email } })
@@ -60,7 +60,7 @@ let updateUser = async (user) => {
  * @param {string} info {查询字典}
  * @returns info
  */
-let getUserInfo = async (info) => {
+const getUserInfo = async (info) => {
 	return new Promise(async (resolve, reject) => {
 		User
 			.findAll({ where: info })
@@ -69,9 +69,37 @@ let getUserInfo = async (info) => {
 	})
 }
 
+/**
+ * 用于删除一个用户
+ * @param {string} id 用户ID
+ */
+const deleteUser = async (id) => {
+	return new Promise(async (resolve, reject) => {
+		User
+			.delete({ where: { id: id } })
+			.then(data => resolve(true))
+			.catch(err => resolve(false))
+	})
+}
+
+/**
+ * 以名字模糊搜索用户信息
+ * @param {string} name 用户名字
+ */
+const searchUser = async (name) => {
+	return new Promise(async (resolve, reject) => {
+		User
+			.findAll({ where: { name: { [Op.like]: `%${name}%` } } })
+			.then(data => resolve(data))
+			.catch(err => resolve(false))
+	})
+}
+
 module.exports = {
 	checkPassword,
 	addUser,
 	updateUser,
-	getUserInfo
+	getUserInfo,
+	deleteUser,
+	searchUser
 }

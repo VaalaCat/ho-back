@@ -5,4 +5,4 @@ module.exports = db.defineModel('apply', {
     nid: db.STRING(100),
     atime: db.STRING(100),
     archivetime: db.STRING(100)
-});
+})
